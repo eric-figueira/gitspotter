@@ -16,7 +16,7 @@ export default function GithubUserCard({ data }: IGithubUserCardProps) {
           <Avatar className="w-16 h-16">
             <AvatarImage src={data.avatar_url} alt={data.name} />
             <AvatarFallback>
-              <Skeleton className="h-12 w-12 rounded-full" />
+              <Skeleton className="h-16 w-16 rounded-full" />
             </AvatarFallback>
           </Avatar>
         </div>

@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import GithubUser from "@/lib/types/GithubUser";
 import GithubUserCard from "./GithubUserCard";
 import { Alert } from "./ui/alert";
+import GithubUserCardSkeleton from "./GithubUserCard-Skeleton";
 
 export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -20,32 +21,31 @@ export default function Content() {
   })
 
   async function fetchData() {
-    const user_response = await axios.get(`https://api.github.com/users/${usernameRef.current!.value}`);
-    const user: GithubUser = user_response.data;
+    // const user_response = await axios.get(`https://api.github.com/users/${usernameRef.current!.value}`);
+    // const user: GithubUser = user_response.data;
 
-    const following_url = user.following_url.split('{')[0];
-    const following_response = await axios.get(`${following_url}?per_page=100`);
-    const following: GithubUser[] = following_response.data;
+    // const following_url = user.following_url.split('{')[0];
+    // const following_response = await axios.get(`${following_url}?per_page=100`);
+    // const following: GithubUser[] = following_response.data;
 
-    const results = await Promise.all(
-      following.map(async (other: GithubUser) => {
-        const clean_url = other.following_url.split('{')[0];
-        console.log('allright ' + clean_url)
-        const following_response = await axios.get(`${clean_url}/${user.login}`);
-        return {
-          ...other,
-          followsBack: following_response.status === 204,
-        }
-      })
-    )
+    // const results = await Promise.all(
+    //   following.map(async (other: GithubUser) => {
+    //     const clean_url = other.following_url.split('{')[0];
+    //     console.log('allright ' + clean_url)
+    //     const following_response = await axios.get(`${clean_url}/${user.login}`);
+    //     return {
+    //       ...other,
+    //       followsBack: following_response.status === 204,
+    //     }
+    //   })
+    // )
 
-    const nonFollowers = results.filter((user: GithubUser) => !user.followsBack);
+    // const nonFollowers = results.filter((user: GithubUser) => !user.followsBack);
     
-    return nonFollowers;
-  }
+    // return nonFollowers;
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
-  async function followsBack(user: GithubUser, followers: GithubUser[]) {
-    
+    return [];
   }
 
   const handleSearchUser = async () => { 
@@ -81,30 +81,36 @@ export default function Content() {
       <div>
         {isError && (
           <>
-            <Alert variant='destructive' className="w-fit">
+            <Alert variant='destructive'>
               Couldn't fetch user data. Error: {error.message}
             </Alert>
           </>
         )}
         {isLoading && (
           <>
-            <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
+            <div className="grid grid-cols-5 gap-2">
+              {Array(5)
+                .fill(1)
+                .map((_, index) => (
+                  <GithubUserCardSkeleton key={index} />
+              ))}
             </div>
-          </div>
           </>
         )}
         {isFetched && (
-          <div className="grid grid-cols-5 gap-2">
-            {data?.map((user: GithubUser) => {
-              return (
-                <GithubUserCard data={user} />
-              )
-            })}
-          </div>
+          <>
+            {data?.length === 0 ? (
+              <Alert variant='destructive' className="text-center text-neutral-300 border-neutral-300">
+                There is no one that you follow that does not follow you back.
+              </Alert>
+            ) : (
+              <div className="grid grid-cols-5 gap-2">
+                {data?.map((user: GithubUser) => (
+                  <GithubUserCard key={user.login} data={user} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
