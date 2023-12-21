@@ -21,31 +21,30 @@ export default function Content() {
   })
 
   async function fetchData() {
-    // const user_response = await axios.get(`https://api.github.com/users/${usernameRef.current!.value}`);
-    // const user: GithubUser = user_response.data;
+    const user_response = await axios.get(`https://api.github.com/users/${usernameRef.current!.value}`);
+    const user: GithubUser = user_response.data;
 
-    // const following_url = user.following_url.split('{')[0];
-    // const following_response = await axios.get(`${following_url}?per_page=100`);
-    // const following: GithubUser[] = following_response.data;
+    const following_url = user.following_url.split('{')[0];
+    const following_response = await axios.get(`${following_url}?per_page=3`);
+    const following: GithubUser[] = following_response.data;
 
-    // const results = await Promise.all(
-    //   following.map(async (other: GithubUser) => {
-    //     const clean_url = other.following_url.split('{')[0];
-    //     console.log('allright ' + clean_url)
-    //     const following_response = await axios.get(`${clean_url}/${user.login}`);
-    //     return {
-    //       ...other,
-    //       followsBack: following_response.status === 204,
-    //     }
-    //   })
-    // )
+    const results = await Promise.all(
+      following.map(async (other: GithubUser) => {
+        const clean_url = other.following_url.split('{')[0];
+        const following_response = await axios.get(`${clean_url}/${user.login}`);
+        return {
+          ...other,
+          followsBack: following_response.status === 204,
+        }
+      })
+    )
 
-    // const nonFollowers = results.filter((user: GithubUser) => !user.followsBack);
+    const nonFollowers = results.filter((user: GithubUser) => !user.followsBack);
     
-    // return nonFollowers;
-    await new Promise((resolve) => setTimeout(resolve, 50000));
+    return nonFollowers;
+    // await new Promise((resolve) => setTimeout(resolve, 50000));
 
-    return [];
+    // return [];
   }
 
   const handleSearchUser = async () => { 
@@ -89,7 +88,7 @@ export default function Content() {
         {isLoading && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-              {Array(5)
+              {Array(3)
                 .fill(1)
                 .map((_, index) => (
                   <GithubUserCardSkeleton key={index} />
@@ -104,7 +103,7 @@ export default function Content() {
                 There is no one that you follow that does not follow you back.
               </Alert>
             ) : (
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {data?.map((user: GithubUser) => (
                   <GithubUserCard key={user.login} data={user} />
                 ))}

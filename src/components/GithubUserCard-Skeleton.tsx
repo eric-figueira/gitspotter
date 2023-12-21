@@ -1,8 +1,4 @@
-import GithubUser from "@/lib/types/GithubUser";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
 
 export default function GithubUserCardSkeleton() {
   return (
