@@ -18,27 +18,44 @@ export default function Content() {
     queryKey: ['user-followers'],
     queryFn: fetchData,
     enabled: false,
+    retry: false,
   })
 
   async function fetchData() {
-    const user_response = await axios.get(`https://api.github.com/users/${usernameRef.current!.value}`);
+    const user_response = await axios
+      .get(`https://api.github.com/users/${usernameRef.current!.value}`, { headers: {
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN}`
+      } });
     const user: GithubUser = user_response.data;
 
     const following_url = user.following_url.split('{')[0];
-    const following_response = await axios.get(`${following_url}?per_page=3`);
+    
+    const following_response = await axios.get(`${following_url}?per_page=100`, { headers: {
+      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN}`
+    } });
     const following: GithubUser[] = following_response.data;
 
     const results = await Promise.all(
       following.map(async (other: GithubUser) => {
         const clean_url = other.following_url.split('{')[0];
-        const following_response = await axios.get(`${clean_url}/${user.login}`);
-        return {
-          ...other,
-          followsBack: following_response.status === 204,
+        try {
+          const following_response = await axios.get(`${clean_url}/${user.login}`, { headers: {
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN}`
+          } });
+          return {
+            ...other,
+            followsBack: following_response.status === 204,
+          }
+        } catch (error) {
+          return {
+            ...other,
+            followsBack: false,
+          }
         }
       })
     )
 
+    console.clear();
     const nonFollowers = results.filter((user: GithubUser) => !user.followsBack);
     
     return nonFollowers;
@@ -88,7 +105,7 @@ export default function Content() {
         {isLoading && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-              {Array(3)
+              {Array(4)
                 .fill(1)
                 .map((_, index) => (
                   <GithubUserCardSkeleton key={index} />
