@@ -2,7 +2,7 @@ import GithubUser from "@/lib/types/GithubUser";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
+import { ExternalLink } from "lucide-react";
 
 interface IGithubUserCardProps {
   data: GithubUser
@@ -24,10 +24,11 @@ export default function GithubUserCard({ data }: IGithubUserCardProps) {
           <p className='text-xl text-neutral-300 w-fit mb-5'>{data.login}</p>
           <a href={data.html_url} className="no-underline text-white" target="_blank">
             <Button
-              className="bg-emerald-600 max-sm:w-28 lg:w-28 hover:bg-emerald-600/70"
+              className="flex gap-2 max-sm:w-full lg:w-fit bg-emerald-600  hover:bg-emerald-600/70"
               size='sm'
             >
-              Visit Profile
+              <span>Visit Profile</span>
+              <ExternalLink size={16} strokeWidth={3} />
             </Button>
           </a>
         </div>

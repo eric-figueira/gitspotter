@@ -8,6 +8,7 @@ import GithubUserCard from "./GithubUserCard";
 import { Alert } from "./ui/alert";
 import GithubUserCardSkeleton from "./GithubUserCard-Skeleton";
 import useNonFollowers from "@/lib/hooks/useNonFollowers";
+import { Search } from "lucide-react";
 
 export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -31,11 +32,12 @@ export default function Content() {
             ref={usernameRef}
           />
           <Button 
-            className="bg-emerald-600 w-28 hover:bg-emerald-600/70"
+            className="flex gap-2 bg-emerald-600 w-28 hover:bg-emerald-600/70"
             disabled={isLoading}
             onClick={handleSearchUser}
           >
-            Search
+            <Search size={18} strokeWidth={3} />
+            <span>Search</span>
           </Button>
         </div>
         <div className="w-full md:w-1/2">
