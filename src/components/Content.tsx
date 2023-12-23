@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import GithubUser from "@/lib/types/GithubUser";
@@ -11,6 +11,7 @@ import useNonFollowers from "@/lib/hooks/useNonFollowers";
 
 export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
+  const [filter, setFilter] = useState<string>('');
 
   const { data, isError, error, isLoading, refetch, isFetched } = useNonFollowers(usernameRef)
 
@@ -41,6 +42,8 @@ export default function Content() {
           <Input 
             className="bg-neutral-800 border-neutral-700 text-neutral-200 text-md"
             placeholder="Find someone you think doesn't follow you..."
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
           />
         </div>
       </div>
@@ -71,7 +74,7 @@ export default function Content() {
               </Alert>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                {data?.map((user: GithubUser) => (
+                {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
                   <GithubUserCard key={user.login} data={user} />
                 ))}
               </div>
