@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Gitmate',
   description: 'Spot those who do not follow you back in Github',
+  icons: {
+    icon: "/gitmate-logo.ico"
+  }
 }
 
 export default function RootLayout({
