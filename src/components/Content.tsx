@@ -59,7 +59,7 @@ export default function Content() {
         )}
         {isLoading && (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {Array(4)
                 .fill(1)
                 .map((_, index) => (
@@ -75,7 +75,7 @@ export default function Content() {
                 There is no one that you follow that does not follow you back.
               </Alert>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
                   <GithubUserCard key={user.login} data={user} />
                 ))}
