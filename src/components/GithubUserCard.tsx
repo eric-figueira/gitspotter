@@ -22,7 +22,7 @@ export default function GithubUserCard({ data }: IGithubUserCardProps) {
           </Avatar>
         </div>
         <div className="flex flex-col justify-center">
-          <div className="flex flex-col md:flex-row items-center gap-2 mb-5">
+          <div className="flex flex-col items-start gap-2 mb-5">
             <p className='text-xl break-all text-neutral-300 md:w-fit'>{data.login}</p>
             <Badge 
               className="text-neutral-200 bg-slate-800 hover:bg-slate-800 rounded-md text-sm h-fit"

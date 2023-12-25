@@ -46,6 +46,7 @@ export default function Content() {
             placeholder="Find someone you think doesn't follow you..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
+            disabled={data === undefined}
           />
         </div>
       </div>
