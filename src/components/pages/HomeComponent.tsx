@@ -67,7 +67,7 @@ export default function HomeComponent() {
           <>
             {isError ? (
               <Alert variant='destructive' className='text-center'>
-                Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}
+                Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}. Reload the page and try again.
               </Alert>
             ) : (
               <>
