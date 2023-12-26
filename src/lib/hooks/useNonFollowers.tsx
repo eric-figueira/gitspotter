@@ -16,7 +16,6 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
     queryFn: fetchNonFollowers,
     enabled: false,
     retry: false,
-    throwOnError: false,
   })
 
   async function fetchNonFollowers() {
@@ -25,8 +24,7 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
 
     const user: GithubUser = user_response.data
 
-    const following_url = user.following_url.split('{')[0]
-    
+    const following_url = user.following_url.split('{')[0]  
     const following_response = await axios.get(`${following_url}?per_page=100`, axiosConfiguration)
     const following: GithubUser[] = following_response.data
 

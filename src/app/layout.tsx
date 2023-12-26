@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Gitmate',
   description: 'Spot those who do not follow you back in Github',
   icons: {
-    icon: '/gitmate-logo.ico'
+    icon: '/gitmate-logo.ico',
   },
 }
 

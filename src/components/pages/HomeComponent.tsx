@@ -49,7 +49,7 @@ export default function HomeComponent() {
               placeholder="Check if someone does not follow you back..."
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              disabled={data === undefined || data?.length === 0}
+              disabled={data === undefined || data?.length === 0 || isFetching}
             />
           </div>
         </div>
