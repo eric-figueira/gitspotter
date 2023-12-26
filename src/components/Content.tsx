@@ -14,7 +14,7 @@ export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const [filter, setFilter] = useState<string>('');
 
-  const { data, isError, error, isFetching, refetch, isFetched, clearData } = useNonFollowers(usernameRef)
+  const { data, isError, error, isFetching, refetch, clearData } = useNonFollowers(usernameRef)
 
   const handleSearchUser = async () => { 
     if (usernameRef.current && usernameRef.current.value.trim() !== '') {
@@ -52,43 +52,39 @@ export default function Content() {
         </div>
       </div>
       <div>
-        {isFetching && (
+        {isFetching ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {Array(4)
+              .fill(1)
+              .map((_, index) => (
+                <GithubUserCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {Array(4)
-                .fill(1)
-                .map((_, index) => (
-                  <GithubUserCardSkeleton key={index} />
-              ))}
-            </div>
-          </>
-        )}
-        {isError && (
-          <>
-            <Alert variant='destructive' className="text-center">
-              Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}
-            </Alert>
-          </>
-        )}
-        {isFetched && (
-          <>
-            {data?.length === 0 && !isFetching && !isError && (
+            {isError ? (
+              <Alert variant='destructive' className="text-center">
+                Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}
+              </Alert>
+            ) : (
               <>
-                <Alert variant='destructive' className="text-center text-neutral-300 border-neutral-300">
-                  Everyone you follow is following you back.
-                </Alert>
-                <div className="p-10 flex justify-center items-center">
-                  <UserX size={125} className="text-neutral-800" />
-                </div>
+                {data?.length === 0 ? (
+                  <>
+                    <Alert variant='destructive' className="text-center text-neutral-300 border-neutral-300">
+                      Everyone you follow is following you back.
+                    </Alert>
+                    <div className="p-10 flex justify-center items-center">
+                      <UserX size={125} className="text-neutral-800" />
+                    </div>
+                  </>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
+                      <GithubUserCard key={user.login} data={user} />
+                    ))}
+                  </div>
+                )}
               </>
-            )}
-
-            {data?.length! > 0 && !isFetching && !isError && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
-                  <GithubUserCard key={user.login} data={user} />
-                ))}
-              </div>
             )}
           </>
         )}

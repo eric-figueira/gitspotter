@@ -12,7 +12,7 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
   const queryClient = useQueryClient();
   const inputReference: React.RefObject<HTMLInputElement> = ref;
 
-  const { data, isError, error, isFetching, refetch, isFetched } = useQuery<GithubUser[]>({ 
+  const { data, isError, error, isFetching, refetch } = useQuery<GithubUser[]>({ 
     queryKey: ['user-non-followers'],
     queryFn: fetchNonFollowers,
     enabled: false,
@@ -61,5 +61,5 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
     queryClient.setQueryData(['user-non-followers'], undefined);
   }
 
-  return { data, isError, error, isFetching, refetch, isFetched, clearData }
+  return { data, isError, error, isFetching, refetch, clearData }
 }
