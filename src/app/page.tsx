@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="min-h-screen bg-neutral-900">
-      <div className="p-10">
+      <div className="p-10 flex flex-col gap-10">
         <div>
           <div className="flex gap-3 items-center">
             <Image 
@@ -19,7 +19,7 @@ export default function Home() {
           <p className="text-md md:text-lg text-neutral-300 mt-5">Type your Github username and spot those who are not following you back.</p>
         </div>
 
-        <div className="mt-10">
+        <div>
           <Content />
         </div>
       </div>
