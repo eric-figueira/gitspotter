@@ -1,6 +1,6 @@
-import GithubUser from "../types/GithubUser";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import GithubUser from '@/lib/types/GithubUser'
+import axios from 'axios'
+import { useQuery } from '@tanstack/react-query'
 
 const axiosConfiguration = {
   headers: {
@@ -9,8 +9,7 @@ const axiosConfiguration = {
 }
 
 export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) {
-
-  const inputReference: React.RefObject<HTMLInputElement> = ref;
+  const inputReference: React.RefObject<HTMLInputElement> = ref
 
   const { data, isError, error, isFetching, refetch } = useQuery<GithubUser[]>({ 
     queryKey: ['user-non-followers'],
@@ -18,24 +17,24 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
     enabled: false,
     retry: false,
     throwOnError: false,
-  });
+  })
 
   async function fetchNonFollowers() {
     const user_response = await axios
-      .get(`https://api.github.com/users/${inputReference.current!.value}`, axiosConfiguration);
+      .get(`https://api.github.com/users/${inputReference.current!.value}`, axiosConfiguration)
 
-    const user: GithubUser = user_response.data;
+    const user: GithubUser = user_response.data
 
-    const following_url = user.following_url.split('{')[0];
+    const following_url = user.following_url.split('{')[0]
     
-    const following_response = await axios.get(`${following_url}?per_page=100`, axiosConfiguration);
-    const following: GithubUser[] = following_response.data;
+    const following_response = await axios.get(`${following_url}?per_page=100`, axiosConfiguration)
+    const following: GithubUser[] = following_response.data
 
     const results = await Promise.all(
       following.map(async (other: GithubUser) => {
-        const clean_url = other.following_url.split('{')[0];
+        const clean_url = other.following_url.split('{')[0]
         try {
-          const following_response = await axios.get(`${clean_url}/${user.login}`, axiosConfiguration);
+          const following_response = await axios.get(`${clean_url}/${user.login}`, axiosConfiguration)
           return {
             ...other,
             followsBack: following_response.status === 204,
@@ -49,10 +48,10 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
       })
     )
 
-    console.clear();
-    const nonFollowers = results.filter((user: GithubUser) => !user.followsBack);
+    console.clear()
+    const nonFollowers = results.filter((user: GithubUser) => !user.followsBack)
     
-    return nonFollowers;
+    return nonFollowers
   }
 
   return { data, isError, error, isFetching, refetch }

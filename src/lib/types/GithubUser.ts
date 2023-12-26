@@ -4,6 +4,6 @@ export default interface GithubUser {
   following_url: string,
   html_url: string,
   login: string,
-  type: "User" | "Organization",
+  type: 'User' | 'Organization',
   followsBack?: boolean | undefined,
 }
