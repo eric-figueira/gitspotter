@@ -14,7 +14,7 @@ export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const [filter, setFilter] = useState<string>('');
 
-  const { data, isError, error, isLoading, refetch, isFetched, clearData } = useNonFollowers(usernameRef)
+  const { data, isError, error, isFetching, refetch, isFetched, clearData } = useNonFollowers(usernameRef)
 
   const handleSearchUser = async () => { 
     if (usernameRef.current && usernameRef.current.value.trim() !== '') {
@@ -34,7 +34,7 @@ export default function Content() {
           />
           <Button 
             className="flex gap-2 bg-emerald-600 w-28 hover:bg-emerald-600/70"
-            disabled={isLoading}
+            disabled={isFetching}
             onClick={handleSearchUser}
           >
             <Search size={18} strokeWidth={3} />
@@ -52,14 +52,7 @@ export default function Content() {
         </div>
       </div>
       <div>
-        {isError && (
-          <>
-            <Alert variant='destructive' className="text-center">
-              Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}
-            </Alert>
-          </>
-        )}
-        {isLoading && (
+        {isFetching && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {Array(4)
@@ -70,9 +63,16 @@ export default function Content() {
             </div>
           </>
         )}
+        {isError && (
+          <>
+            <Alert variant='destructive' className="text-center">
+              Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}
+            </Alert>
+          </>
+        )}
         {isFetched && (
           <>
-            {data?.length === 0 && !isError && (
+            {data?.length === 0 && !isFetching && !isError && (
               <>
                 <Alert variant='destructive' className="text-center text-neutral-300 border-neutral-300">
                   Everyone you follow is following you back.
@@ -83,7 +83,7 @@ export default function Content() {
               </>
             )}
 
-            {data?.length! > 0 && (
+            {data?.length! > 0 && !isFetching && !isError && (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
                   <GithubUserCard key={user.login} data={user} />
