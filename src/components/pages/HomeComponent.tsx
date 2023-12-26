@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Button, Input, Alert } from '@/components/ui'
+import { Button, Input, Alert, Label } from '@/components/ui'
 import GithubUser from '@/lib/types/GithubUser'
 import GithubUserCard from '@/components/GithubUserCard'
 import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
@@ -22,13 +22,16 @@ export default function HomeComponent() {
 
   return (
     <div className='flex flex-col gap-5'>
-      <div className='flex flex-col md:flex-row gap-5'>
-        <div className='w-full md:w-1/2 flex flex-row gap-3'>
-          <Input 
-            className='bg-neutral-800 border-neutral-700 focus:border-neutral-600 text-neutral-200 text-md'
-            placeholder='Type your Github username...'
-            ref={usernameRef}
-          />
+      <div className='flex flex-col md:flex-row gap-3 md:gap-5'>
+        <div className='w-full md:w-1/2 flex flex-row items-end gap-3'>
+          <div className='w-full flex flex-col gap-2'>
+            <Label className='text-neutral-200 text-sm'>Github Username</Label>
+            <Input 
+              className='bg-neutral-800 border-neutral-700 focus:border-neutral-600 text-neutral-200 text-md'
+              placeholder='Type your Github username...'
+              ref={usernameRef}
+            />
+          </div>
           <Button 
             className='flex gap-2 bg-emerald-600 w-28 hover:bg-emerald-600/70'
             disabled={isFetching}
@@ -39,13 +42,16 @@ export default function HomeComponent() {
           </Button>
         </div>
         <div className='w-full md:w-1/2'>
-          <Input 
-            className='bg-neutral-800 border-neutral-700 text-neutral-200 text-md'
-            placeholder="Find someone you think doesn't follow you..."
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            disabled={data === undefined || data?.length === 0}
-          />
+          <div className='w-full flex flex-col gap-2'>
+            <Label className='text-neutral-200 text-sm'>NonFollower Username</Label>
+            <Input 
+              className='bg-neutral-800 border-neutral-700 text-neutral-200 text-md'
+              placeholder="Check if someone does not follow you back..."
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              disabled={data === undefined || data?.length === 0}
+            />
+          </div>
         </div>
       </div>
       <div>
