@@ -6,4 +6,6 @@ To-Do list:
 - [x] New card design
 - [x] Icons
 - [x] Responsiveness
-- [ ] Code readability
+- [x] Code readability
+- [ ] Rename?
+- [ ] Pagination
