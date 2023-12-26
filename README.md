@@ -1,8 +1,9 @@
 Gitmate is a simple website that allows you to spot those who don't follow you back on github.
 
-- [ ] Improve Metadata
+To-Do list:
+- [x] Improve UX/UI
 - [ ] Improve SSR
-- [ ] New card design
-- [ ] Icons
-- [ ] Responsiveness
+- [x] New card design
+- [x] Icons
+- [x] Responsiveness
 - [ ] Code readability
