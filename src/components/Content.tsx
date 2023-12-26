@@ -8,16 +8,17 @@ import GithubUserCard from "./GithubUserCard";
 import { Alert } from "./ui/alert";
 import GithubUserCardSkeleton from "./GithubUserCard-Skeleton";
 import useNonFollowers from "@/lib/hooks/useNonFollowers";
-import { Search } from "lucide-react";
+import { Search, UserX } from "lucide-react";
 
 export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const [filter, setFilter] = useState<string>('');
 
-  const { data, isError, error, isLoading, refetch, isFetched } = useNonFollowers(usernameRef)
+  const { data, isError, error, isLoading, refetch, isFetched, clearData } = useNonFollowers(usernameRef)
 
   const handleSearchUser = async () => { 
     if (usernameRef.current && usernameRef.current.value.trim() !== '') {
+      await clearData();
       await refetch();
     }
   }
@@ -46,15 +47,15 @@ export default function Content() {
             placeholder="Find someone you think doesn't follow you..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            disabled={data === undefined}
+            disabled={data === undefined || data?.length === 0}
           />
         </div>
       </div>
       <div>
         {isError && (
           <>
-            <Alert variant='destructive'>
-              Couldn't fetch user data. Error: {error?.message}
+            <Alert variant='destructive' className="text-center">
+              Couldn't fetch user data. {`Error: ${error?.message}` || 'An error occurred when trying to fetch user data.'}
             </Alert>
           </>
         )}
@@ -71,11 +72,18 @@ export default function Content() {
         )}
         {isFetched && (
           <>
-            {data?.length === 0 ? (
-              <Alert variant='destructive' className="text-center text-neutral-300 border-neutral-300">
-                There is no one that you follow that does not follow you back.
-              </Alert>
-            ) : (
+            {data?.length === 0 && !isError && (
+              <>
+                <Alert variant='destructive' className="text-center text-neutral-300 border-neutral-300">
+                  Everyone you follow is following you back.
+                </Alert>
+                <div className="p-10 flex justify-center items-center">
+                  <UserX size={125} className="text-neutral-800" />
+                </div>
+              </>
+            )}
+
+            {data?.length! > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
                   <GithubUserCard key={user.login} data={user} />
