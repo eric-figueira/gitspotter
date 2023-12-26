@@ -14,11 +14,10 @@ export default function Content() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const [filter, setFilter] = useState<string>('');
 
-  const { data, isError, error, isFetching, refetch, clearData } = useNonFollowers(usernameRef)
+  const { data, isError, error, isFetching, refetch } = useNonFollowers(usernameRef)
 
   const handleSearchUser = async () => { 
     if (usernameRef.current && usernameRef.current.value.trim() !== '') {
-      await clearData();
       await refetch();
     }
   }

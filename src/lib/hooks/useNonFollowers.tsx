@@ -1,6 +1,6 @@
 import GithubUser from "../types/GithubUser";
 import axios from "axios";
-import { QueryCache, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const axiosConfiguration = {
   headers: {
@@ -9,7 +9,7 @@ const axiosConfiguration = {
 }
 
 export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) {
-  const queryClient = useQueryClient();
+
   const inputReference: React.RefObject<HTMLInputElement> = ref;
 
   const { data, isError, error, isFetching, refetch } = useQuery<GithubUser[]>({ 
@@ -23,8 +23,6 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
   async function fetchNonFollowers() {
     const user_response = await axios
       .get(`https://api.github.com/users/${inputReference.current!.value}`, axiosConfiguration);
-    
-    if (user_response.status === 404) { throw new Error('aaRequest failed with status code 404. User not found.') }
 
     const user: GithubUser = user_response.data;
 
@@ -57,9 +55,5 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
     return nonFollowers;
   }
 
-  async function clearData() {
-    queryClient.setQueryData(['user-non-followers'], undefined);
-  }
-
-  return { data, isError, error, isFetching, refetch, clearData }
+  return { data, isError, error, isFetching, refetch }
 }
