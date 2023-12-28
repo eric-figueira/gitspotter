@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Button, Input, Alert, Label } from '@/components/ui'
+import { Button, Input, Alert, Label, Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from '@/components/ui'
 import GithubUser from '@/lib/types/GithubUser'
 import GithubUserCard from '@/components/GithubUserCard'
 import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
@@ -81,10 +81,25 @@ export default function HomeComponent() {
                     </div>
                   </>
                 ) : (
-                  <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
-                    {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
-                      <GithubUserCard key={user.login} data={user} />
-                    ))}
+                  <div className='flex flex-col gap-5'> 
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
+                      {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
+                        <GithubUserCard key={user.login} data={user} />
+                      ))}
+                    </div>
+                    {data !== undefined && (
+                      <div>
+                        <Pagination className='text-neutral-200'>
+                          <PaginationContent>
+                            <PaginationPrevious href="#" />
+                            <PaginationLink href="#" isActive>1</PaginationLink>
+                            <PaginationLink href="#">2</PaginationLink>
+                            <PaginationLink href="#">3</PaginationLink>
+                            <PaginationNext href="#" />
+                          </PaginationContent>
+                        </Pagination>
+                      </div>
+                    )}  
                   </div>
                 )}
               </>
