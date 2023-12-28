@@ -5,7 +5,7 @@ import { Button, Input, Alert, Label } from '@/components/ui'
 import GithubUser from '@/lib/types/GithubUser'
 import GithubUserCard from '@/components/GithubUserCard'
 import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
-import useNonFollowers from '@/lib/hooks/useNonFollowers'
+import useNonFollowers from '@/lib/hooks/use-non-followers'
 import { Search, UserX } from 'lucide-react'
 
 export default function HomeComponent() {
