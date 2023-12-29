@@ -7,12 +7,14 @@ import GithubUserCard from '@/components/GithubUserCard'
 import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
 import useNonFollowers from '@/lib/hooks/use-non-followers'
 import { Search, UserX } from 'lucide-react'
+import usePagination from '@/lib/hooks/use-pagination'
 
 export default function HomeComponent() {
   const usernameRef = useRef<HTMLInputElement>(null)
   const [filter, setFilter] = useState<string>('')
 
-  const { data, isError, error, isFetching, refetch } = useNonFollowers(usernameRef)
+  const { data, isError, error, isFetching, isFetched, refetch } = useNonFollowers(usernameRef)
+  const { paginatedData, numberPages, currentPage, previous, next, page } = usePagination(data!)
 
   const handleSearchUser = async () => { 
     if (usernameRef.current && usernameRef.current.value.trim() !== '') {
@@ -71,7 +73,7 @@ export default function HomeComponent() {
               </Alert>
             ) : (
               <>
-                {data?.length === 0 ? (
+                {isFetched && paginatedData?.length === 0 ? (
                   <>
                     <Alert variant='destructive' className='text-center text-neutral-300 border-neutral-300'>
                       Everyone you follow is following you back.
@@ -83,7 +85,7 @@ export default function HomeComponent() {
                 ) : (
                   <div className='flex flex-col gap-5'> 
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
-                      {data?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
+                      {paginatedData?.filter((user: GithubUser) => user.login.toLowerCase().includes(filter.toLowerCase())).map((user: GithubUser) => (
                         <GithubUserCard key={user.login} data={user} />
                       ))}
                     </div>
@@ -91,11 +93,28 @@ export default function HomeComponent() {
                       <div>
                         <Pagination className='text-neutral-200'>
                           <PaginationContent>
-                            <PaginationPrevious href="#" />
-                            <PaginationLink href="#" isActive>1</PaginationLink>
-                            <PaginationLink href="#">2</PaginationLink>
-                            <PaginationLink href="#">3</PaginationLink>
-                            <PaginationNext href="#" />
+                            <PaginationPrevious 
+                              onClick={previous} 
+                              aria-disabled={currentPage === 1}
+                              className='cursor-pointer'
+                            />
+                            {Array(numberPages)
+                              .fill(1)
+                              .map((_, index) => (
+                                <PaginationLink 
+                                  onClick={() => page(index+1)}
+                                  key={index}
+                                  isActive={currentPage === index + 1}
+                                  className='cursor-pointer'
+                                >
+                                  {index + 1}
+                                </PaginationLink>
+                            ))}
+                            <PaginationNext 
+                              onClick={next} 
+                              aria-disabled={currentPage === numberPages}
+                              className='cursor-pointer'
+                            />
                           </PaginationContent>
                         </Pagination>
                       </div>
