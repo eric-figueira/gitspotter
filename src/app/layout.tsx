@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 import TanstackProvider from '@/providers/TanstackProvider'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TanstackProvider>
           {children}
         </TanstackProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
