@@ -46,7 +46,7 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
       })
     )
 
-    //console.clear()
+    console.clear()
     const nonFollowers = results.filter((user: GithubUser) => !user.followsBack)
     
     return nonFollowers

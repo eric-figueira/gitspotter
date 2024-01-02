@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Button, Input, Alert, Label, Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from '@/components/ui'
+import { Button, Input, Alert, Label, Pagination, PaginationContent, PaginationPrevious, PaginationLink, PaginationNext } from '@/components/ui'
 import GithubUser from '@/lib/types/GithubUser'
 import GithubUserCard from '@/components/GithubUserCard'
 import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
@@ -91,7 +91,7 @@ export default function HomeComponent() {
                     </div>
                     {data !== undefined && (
                       <div>
-                        <Pagination className='text-neutral-200'>
+                        <Pagination className='text-neutral-200 select-none'>
                           <PaginationContent>
                             <PaginationPrevious 
                               onClick={previous} 
