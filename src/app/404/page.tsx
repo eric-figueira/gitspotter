@@ -2,6 +2,10 @@ import { Button } from '@/components/ui/button'
 import { SearchX } from 'lucide-react'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'Not Found'
+}
+
 export default function NotFoundPage() {
   return (
     <div className='h-screen p-5 flex flex-col justify-center items-center gap-8 text-center text-neutral-200 bg-neutral-900'>

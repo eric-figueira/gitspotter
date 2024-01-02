@@ -6,11 +6,23 @@ import TanstackProvider from '@/providers/TanstackProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Gitmate',
-  description: 'Spot those who do not follow you back in Github',
+  applicationName: 'Gitmate',
+  authors: [{ name: 'Éric Carvalho Figueira' }],
+  description: 'Spot those who do not follow you back in GitHub',
   icons: {
     icon: '/gitmate-logo.ico',
   },
+  keywords: ['Next.js', 'React', 'JavaScript', 'TypeScript'],
+  openGraph: {
+
+  },
+  title: {
+    default: 'Gitmate',
+    template: '%s | Gitmate',
+  },
+  twitter: {
+
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
