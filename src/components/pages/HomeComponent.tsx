@@ -8,10 +8,12 @@ import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
 import useNonFollowers from '@/lib/hooks/use-non-followers'
 import { Search, UserX } from 'lucide-react'
 import usePagination from '@/lib/hooks/use-pagination'
+import { isValidUsername } from '@/lib/utils'
 
 export default function HomeComponent() {
   const usernameRef = useRef<HTMLInputElement>(null)
   const [filter, setFilter] = useState<string>('')
+  const [showInvalidUsernameError, setShowInvalidUsernameError] = useState(false)
 
   const { data, isError, error, isFetching, isFetched, refetch } = useNonFollowers(usernameRef)
   const { paginatedData, numberPages, currentPage, previous, next, page } = usePagination(data!)
@@ -25,23 +27,30 @@ export default function HomeComponent() {
   return (
     <div className='flex flex-col gap-5'>
       <div className='flex flex-col md:flex-row gap-3 md:gap-5'>
-        <div className='w-full md:w-1/2 flex flex-row items-end gap-3'>
-          <div className='w-full flex flex-col gap-2'>
-            <Label className='text-neutral-200 text-sm'>Github Username</Label>
+        <div className='w-full md:w-1/2 flex flex-col gap-2'>
+          <Label className='text-neutral-200 text-sm'>Github Username</Label>
+          <div className='flex flex-row gap-3'>
             <Input 
               className='bg-neutral-800 border-neutral-700 focus:border-neutral-600 text-neutral-200 text-md'
-              placeholder='Type your Github username...'
+              placeholder='Type your GitHub username...'
               ref={usernameRef}
+              onChange={(e) => setShowInvalidUsernameError(!isValidUsername(e.target.value))}
             />
+            <Button 
+              className='flex gap-2 bg-emerald-600 w-28 hover:bg-emerald-600/70'
+              disabled={isFetching || showInvalidUsernameError}
+              onClick={handleSearchUser}
+            >
+              <Search size={18} strokeWidth={3} />
+              <span>Search</span>
+            </Button>
           </div>
-          <Button 
-            className='flex gap-2 bg-emerald-600 w-28 hover:bg-emerald-600/70'
-            disabled={isFetching}
-            onClick={handleSearchUser}
+          <Label 
+            className='text-red-700 font-semibold text-sm'
+            hidden={!showInvalidUsernameError}
           >
-            <Search size={18} strokeWidth={3} />
-            <span>Search</span>
-          </Button>
+            Invalid GitHub Username
+          </Label>
         </div>
         <div className='w-full md:w-1/2'>
           <div className='w-full flex flex-col gap-2'>

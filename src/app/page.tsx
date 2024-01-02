@@ -17,7 +17,7 @@ export default function Home() {
             />
             <h1 className='text-3xl md:text-4xl font-semibold text-white cursor-default'>Gitmate</h1>
           </div>
-          <p className='text-md md:text-lg text-neutral-300 mt-5 cursor-default'>Type your Github username and spot those who are not following you back.</p>
+          <p className='text-md md:text-lg text-neutral-300 mt-5 cursor-default'>Type your GitHub username and spot those who are not following you back.</p>
         </div>
 
         <div>
