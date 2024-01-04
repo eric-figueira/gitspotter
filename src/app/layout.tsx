@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 import TanstackProvider from '@/providers/TanstackProvider'
 import { Header } from '@/components/layout/Header'
-import { ThemeProvider } from 'next-themes'
+import ThemeProvider from '@/providers/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,13 +31,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ThemeProvider attribute='class' defaultTheme='dark'>
-          <>
-            <Header />
-            <TanstackProvider>
-              {children}
-            </TanstackProvider>
-          </>
+        <ThemeProvider 
+          attribute='class' 
+          defaultTheme='dark'
+        >
+          <Header />
+          <TanstackProvider>
+            {children}
+          </TanstackProvider>
         </ThemeProvider>
       </body>
     </html>
