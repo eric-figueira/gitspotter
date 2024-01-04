@@ -8,4 +8,6 @@ To-Do list:
 - [x] Responsiveness
 - [x] Code readability
 - [ ] Rename?
-- [ ] Pagination
+- [x] Pagination
+- [x] Dark/Light theme
+- [ ] Metadata
