@@ -17,15 +17,22 @@ export const metadata: Metadata = {
   },
   keywords: ['Next.js', 'React', 'JavaScript', 'TypeScript'],
   openGraph: {
-
+    title: config.title,
+    description: config.description,
+    url: config.url,
+    siteName: config.applicationName,
+    images: [
+      {
+        url: '/og-index-page-image.png',
+        width: 1900,
+        height: 1000,
+      }
+    ],
   },
   title: {
     default: config.title,
     template: `%s | ${config.title}`,
   },
-  twitter: {
-
-  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
