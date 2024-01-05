@@ -10,4 +10,5 @@ To-Do list:
 - [ ] Rename?
 - [x] Pagination
 - [x] Dark/Light theme
-- [ ] Metadata
+- [x] Metadata
+- [ ] Fix fetch error
