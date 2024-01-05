@@ -4,24 +4,23 @@ import '@/styles/globals.css'
 import TanstackProvider from '@/providers/TanstackProvider'
 import { Header } from '@/components/layout/Header'
 import ThemeProvider from '@/providers/ThemeProvider'
-import { AppConfig as config } from '@/lib/AppConfig'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  applicationName: config.applicationName,
+  applicationName: 'Gitmate',
   authors: [{ name: 'Éric Carvalho Figueira' }],
-  description: config.description,
+  description: 'Spot those who do not follow you back in GitHub',
   icons: {
-    icon: config.icon,
+    icon: '/gitmate-logo.ico',
   },
   keywords: ['Next.js', 'React', 'JavaScript', 'TypeScript'],
   openGraph: {
 
   },
   title: {
-    default: config.title,
-    template: `%s | ${config.title}`,
+    default: 'Gitmate',
+    template: '%s | Gitmate',
   },
   twitter: {
 
