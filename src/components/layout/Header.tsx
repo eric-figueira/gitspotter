@@ -2,11 +2,15 @@
 
 import { Sun, Moon } from 'lucide-react'
 import Image from 'next/image'
-import { Button } from '../ui'
+import { Button, Skeleton } from '../ui'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 export function Header() {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   return (
     <div className='border-b border-neutral-300 bg-neutral-100 dark:border-neutral-700 px-10 py-5 dark:bg-neutral-900'>
@@ -24,19 +28,23 @@ export function Header() {
             <h1 className='text-2xl md:text-3xl font-semibold text-neutral-800 dark:text-neutral-200 cursor-default'>Gitmate</h1>
           </div>
         </div>
-        <div>
-          <Button 
-            className='border border-neutral-300 bg-neutral-100 dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-200 group' 
-            size='icon'
-            onClick={() => {
-              theme == 'dark' ? setTheme('light') : setTheme('dark')
-            }}
-          >
-            {theme == 'dark' 
-            ? <Sun className='dark:text-neutral-200 group-hover:text-neutral-900' /> 
-            : <Moon className='text-neutral-900 group-hover:text-neutral-200' />}
-          </Button>
-        </div>
+        {mounted ? (
+          <div>
+            <Button
+              className='border border-neutral-700'
+              size='icon'
+              onClick={() => {
+                theme == 'dark' ? setTheme('light') : setTheme('dark')
+              }}
+            >
+              {theme == 'dark' ? <Sun /> : <Moon />}
+            </Button>
+          </div>
+        ): (
+          <div>
+            <Skeleton className='h-10 w-10 bg-neutral-700 dark:bg-neutral-400' />
+          </div>
+        )}
       </div>
     </div>
   )
