@@ -2,9 +2,13 @@ import { Button } from '@/components/ui/button'
 import { SearchX } from 'lucide-react'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'Not Found'
+}
+
 export default function NotFoundPage() {
   return (
-    <div className='h-screen p-5 flex flex-col justify-center items-center gap-8 text-center text-neutral-200 bg-neutral-900'>
+    <div className='h-screen p-5 flex flex-col justify-center items-center gap-8 text-center text-neutral-800 bg-neutral-100 dark:text-neutral-200 dark:bg-neutral-900'>
       <h1 className='font-semibold text-3xl md:text-4xl'>
         Oops, looks like you are lost...
       </h1>

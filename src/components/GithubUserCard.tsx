@@ -8,7 +8,7 @@ interface IGithubUserCardProps {
 
 export default function GithubUserCard({ data }: IGithubUserCardProps) {
   return (
-    <div className='flex flex-col justify-center md:flex-row md:justify-between items-center gap-2 p-5 group border-neutral-600 hover:border-neutral-400 border-[2px] rounded-lg w-full transition'>
+    <div className='flex flex-col justify-center md:flex-row md:justify-between items-center gap-2 p-5 group border-neutral-400 dark:border-neutral-700 hover:border-neutral-500 dark:hover:border-neutral-500 border-[2px] rounded-lg w-full transition'>
       <div className='flex flex-col md:flex-row justify-center gap-5 flex-wrap'>
         <div className='flex justify-center items-center'>
           <Avatar className='w-20 h-20 border-2 border-emerald-600'>
@@ -20,14 +20,14 @@ export default function GithubUserCard({ data }: IGithubUserCardProps) {
         </div>
         <div className='flex flex-col justify-center gap-3'>
           <div className='max-md:flex flex-row flex-wrap justify-center items-center gap-3'>
-            <p className='text-xl max-md:text-center break-all text-neutral-300 md:w-fit'>{data.login}</p>
+            <p className='text-xl max-md:text-center break-all text-neutral-700 dark:text-neutral-300 md:w-fit'>{data.login}</p>
             <Badge 
               className='md:hidden text-neutral-200 bg-slate-800 hover:bg-slate-800 rounded-md text-sm h-fit'
             >{data.type.toLowerCase()}</Badge>
           </div>
           <a href={data.html_url} className='max-md:mx-auto no-underline text-white' target='_blank'>
             <Button
-              className='flex gap-2 max-sm:w-full max-w-fit bg-emerald-600 hover:bg-emerald-600/70'
+              className='flex gap-2 max-sm:w-full max-w-fit bg-emerald-600 hover:bg-emerald-600/70 text-neutral-200'
               size='sm'
             >
               <span>Visit Profile</span>
@@ -36,7 +36,7 @@ export default function GithubUserCard({ data }: IGithubUserCardProps) {
           </a>
         </div>
       </div>
-      <div className='hidden md:flex justify-center items-center text-neutral-500 group-hover:text-neutral-400'>
+      <div className='hidden md:flex justify-center items-center text-neutral-500 group-hover:text-neutral-600 dark:group-hover:text-neutral-400'>
         {data.type === 'User' ? <User size={30} /> : <Building size={30} />}
       </div>
     </div>
