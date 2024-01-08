@@ -6,7 +6,7 @@ import GithubUser from '@/lib/types/GithubUser'
 import GithubUserCard from '@/components/GithubUserCard'
 import GithubUserCardSkeleton from '@/components/GithubUserCard-Skeleton'
 import useNonFollowers from '@/lib/hooks/use-non-followers'
-import { Search, UserX } from 'lucide-react'
+import { MoreHorizontal, Search, UserX } from 'lucide-react'
 import usePagination from '@/lib/hooks/use-pagination'
 import { isValidUsername } from '@/lib/utils'
 
@@ -57,7 +57,7 @@ export default function HomeComponent() {
             <Label className='text-neutral-800 dark:text-neutral-200 text-sm'>NonFollower Username</Label>
             <Input 
               className='bg-neutral-200 border-neutral-400 text-neutral-800 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 text-md'
-              placeholder="Check if someone does not follow you back..."
+              placeholder='Check if someone does not follow you back...'
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               disabled={data === undefined || data?.length === 0 || isFetching}
@@ -100,25 +100,52 @@ export default function HomeComponent() {
                     </div>
                     {data !== undefined && (
                       <div>
-                        <Pagination className='text-neutral-200 select-none'>
-                          <PaginationContent>
+                        <Pagination className='text-neutral-200 select-none flex flex-wrap'>
+                          <PaginationContent className='flex flex-wrap'>
                             <PaginationPrevious 
                               onClick={previous} 
                               aria-disabled={currentPage === 1}
                               className='cursor-pointer bg-neutral-100 text-neutral-700 hover:bg-neutral-800 hover:text-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-neutral-800'
                             />
-                            {Array(numberPages)
-                              .fill(1)
-                              .map((_, index) => (
+                            {numberPages > 5 ? (
+                              <>
+                                {Array(5)
+                                  .fill(1)
+                                  .map((_, index) => (
+                                    <PaginationLink 
+                                      onClick={() => page(index+1)}
+                                      key={index}
+                                      isActive={currentPage === index + 1}
+                                      className='cursor-pointer bg-neutral-100 text-neutral-700 hover:bg-neutral-800 hover:text-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-neutral-800 dark:aria-[current=page]:bg-neutral-200 dark:aria-[current=page]:text-neutral-800 aria-[current=page]:bg-neutral-800 aria-[current=page]:text-neutral-200'
+                                    >
+                                      {index + 1}
+                                    </PaginationLink>
+                                ))}
                                 <PaginationLink 
-                                  onClick={() => page(index+1)}
-                                  key={index}
-                                  isActive={currentPage === index + 1}
+                                  onClick={() => page(6)}
+                                  isActive={currentPage >= 6}
                                   className='cursor-pointer bg-neutral-100 text-neutral-700 hover:bg-neutral-800 hover:text-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-neutral-800 dark:aria-[current=page]:bg-neutral-200 dark:aria-[current=page]:text-neutral-800 aria-[current=page]:bg-neutral-800 aria-[current=page]:text-neutral-200'
                                 >
-                                  {index + 1}
+                                  <MoreHorizontal className='h-4 w-4' />
                                 </PaginationLink>
-                            ))}
+                              </>
+                            ) : (
+                              <>
+                                {Array(numberPages)
+                                  .fill(1)
+                                  .map((_, index) => (
+                                    <PaginationLink 
+                                      onClick={() => page(index+1)}
+                                      key={index}
+                                      isActive={currentPage === index + 1}
+                                      className='cursor-pointer bg-neutral-100 text-neutral-700 hover:bg-neutral-800 hover:text-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-neutral-800 dark:aria-[current=page]:bg-neutral-200 dark:aria-[current=page]:text-neutral-800 aria-[current=page]:bg-neutral-800 aria-[current=page]:text-neutral-200'
+                                    >
+                                      {index + 1}
+                                    </PaginationLink>
+                                ))}
+                              </>
+                            )}
+                            
                             <PaginationNext 
                               onClick={next} 
                               aria-disabled={currentPage === numberPages}
