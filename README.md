@@ -2,13 +2,13 @@ Gitmate is a simple website that allows you to spot those who don't follow you b
 
 To-Do list:
 - [x] Improve UX/UI
-- [ ] Improve SSR
+- [ ] Improve SSR/SSG
 - [x] New card design
 - [x] Icons
 - [x] Responsiveness
 - [x] Code readability
-- [ ] Rename?
+- [x] Rename?
 - [x] Pagination
 - [x] Dark/Light theme
 - [x] Metadata
-- [ ] Fix fetch error
+- [x] Fix fetch error
