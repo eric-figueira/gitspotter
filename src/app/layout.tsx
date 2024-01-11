@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   icons: {
     icon: config.icon,
   },
-  keywords: ['Next.js', 'React', 'JavaScript', 'TypeScript'],
+  keywords: ['Next.js', 'React', 'JavaScript', 'TypeScript', 'Unfollowers', 'GitHub'],
   openGraph: {
     title: config.title,
     description: config.description,

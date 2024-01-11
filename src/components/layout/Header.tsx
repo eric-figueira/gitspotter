@@ -1,7 +1,5 @@
-import Image from 'next/image'
 import { ThemeSwitcher } from '../ThemeSwitcher'
-import { Suspense } from 'react'
-import { Skeleton } from '../ui'
+import { UserSearch } from 'lucide-react'
 
 export function Header() {
 
@@ -10,17 +8,8 @@ export function Header() {
       <div className='flex items-center justify-between'>
         <div>
           <div className='flex gap-3 items-center'>
-            <Suspense fallback={<Skeleton  className='h-10 w-10 bg-neutral-700 dark:bg-neutral-400 rounded-full' />}>
-              <Image
-                src='/gitmate-logo.png'
-                alt='Gitmate Logo'
-                width={35}
-                height={35}
-                className='bg-white rounded-full p-[2px] border border-neutral-300'
-                draggable={false}
-              />
-            </Suspense>
-            <h1 className='text-2xl md:text-3xl font-semibold text-neutral-800 dark:text-neutral-200 cursor-default'>Gitmate</h1>
+            <UserSearch size={30} />
+            <h1 className='text-2xl md:text-3xl font-medium text-neutral-800 dark:text-neutral-200 cursor-default'>GitSpotter</h1>
           </div>
         </div>
         <ThemeSwitcher />

@@ -28,7 +28,7 @@ export default function HomeComponent() {
     <div className='flex flex-col gap-5'>
       <div className='flex flex-col md:flex-row gap-3 md:gap-5'>
         <div className='w-full md:w-1/2 flex flex-col gap-2'>
-          <Label className='text-neutral-800 dark:text-neutral-200 text-sm'>Github Username</Label>
+          <Label className='text-neutral-800 dark:text-neutral-200 text-sm'>GitHub Username</Label>
           <div className='flex flex-row gap-3'>
             <Input 
               className='bg-neutral-200 border-neutral-400 text-neutral-800 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 text-md'
