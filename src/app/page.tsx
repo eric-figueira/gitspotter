@@ -1,4 +1,5 @@
 import HomeComponent from '@/components/pages/HomeComponent'
+import NonFollowersProvider from '@/providers/NonFollowersProvider'
 
 export default function Home() {
   return (
@@ -8,7 +9,9 @@ export default function Home() {
           <p className='text-md md:text-lg text-neutral-700 dark:text-neutral-300 cursor-default'>Type your GitHub username and spot those who are not following you back.</p>
         </div>
         <div>
-          <HomeComponent />
+          <NonFollowersProvider>
+            <HomeComponent />
+          </NonFollowersProvider>
         </div>
       </div>
     </main>

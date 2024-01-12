@@ -8,8 +8,11 @@ const axiosConfiguration = {
   }
 }
 
-export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) {
-  const inputReference: React.RefObject<HTMLInputElement> = ref
+export default function useNonFollowers(
+  //ref: React.RefObject<HTMLInputElement>,
+  u: string
+  ) {
+  //const inputReference: React.RefObject<HTMLInputElement> = ref
 
   const { data, isError, error, isFetching, isFetched, refetch } = useQuery<GithubUser[]>({ 
     queryKey: ['user-non-followers'],
@@ -20,7 +23,7 @@ export default function useNonFollowers(ref: React.RefObject<HTMLInputElement>) 
 
   async function fetchNonFollowers() {
     const user_response = await axios
-      .get(`https://api.github.com/users/${inputReference.current!.value}`, axiosConfiguration)
+      .get(`https://api.github.com/users/${u}`, axiosConfiguration)
 
     const user: GithubUser = user_response.data
 

@@ -9,18 +9,50 @@ import useNonFollowers from '@/lib/hooks/use-non-followers'
 import { MoreHorizontal, Search, UserX } from 'lucide-react'
 import usePagination from '@/lib/hooks/use-pagination'
 import { isValidUsername } from '@/lib/utils'
+import { useNonFollowersResults } from '@/contexts/NonFollowersContext'
 
 export default function HomeComponent() {
   const usernameRef = useRef<HTMLInputElement>(null)
-  const [filter, setFilter] = useState<string>('')
+ // const [filter, setFilter] = useState<string>('')
   const [showInvalidUsernameError, setShowInvalidUsernameError] = useState(false)
 
-  const { data, isError, error, isFetching, isFetched, refetch } = useNonFollowers(usernameRef)
-  const { paginatedData, numberPages, currentPage, previous, next, page } = usePagination(data!)
+  /*
+  filter,
+        updateFilter,
+        isError,
+        error,
+        isFetching,
+        isFetched,
+        paginatedData,
+        numberPages,
+        currentPage,
+        previous,
+        next,
+        page,
+        fetchUser */
+
+  let {
+    filter,
+    isError,
+    error,
+    isFetching,
+    isFetched,
+    paginatedData,
+    currentPage,
+  } = useNonFollowersResults()
+
+  const {
+    fetchUser,
+    updateFilter,
+    numberPages,
+    previous,
+    next,
+    page,
+  } = useNonFollowersResults()
 
   const handleSearchUser = async () => { 
     if (usernameRef.current && usernameRef.current.value.trim() !== '') {
-      await refetch()
+      await fetchUser(usernameRef.current.value)
     }
   }
 
@@ -59,8 +91,10 @@ export default function HomeComponent() {
               className='bg-neutral-200 border-neutral-400 text-neutral-800 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 text-md'
               placeholder='Check if someone does not follow you back...'
               value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              disabled={data === undefined || data?.length === 0 || isFetching}
+              //onChange={(e) => setFilter(e.target.value)}
+              onChange={(e) => updateFilter(e.target.value)}
+              //disabled={data === undefined || data?.length === 0 || isFetching}
+              disabled={paginatedData === undefined || paginatedData?.length === 0 || isFetching}
             />
           </div>
         </div>
@@ -98,7 +132,7 @@ export default function HomeComponent() {
                         <GithubUserCard key={user.login} data={user} />
                       ))}
                     </div>
-                    {data !== undefined && (
+                    {paginatedData !== undefined && (
                       <div>
                         <Pagination className='text-neutral-200 select-none flex flex-wrap'>
                           <PaginationContent className='flex flex-wrap'>
