@@ -13,6 +13,7 @@ export default function usePagination(original: GithubUser[]) {
       setNumberPages(Math.ceil(original.length / perPage))
       const d = original.slice(0, perPage)
       setPaginatedData(d)
+      setCurrentPage(1)
     }
   }, [original])
 

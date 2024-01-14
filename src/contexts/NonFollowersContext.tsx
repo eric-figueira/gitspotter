@@ -1,7 +1,7 @@
 import useNonFollowers from "@/lib/hooks/use-non-followers";
 import usePagination from "@/lib/hooks/use-pagination";
 import GithubUser from "@/lib/types/GithubUser";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface INonFollowersContext {
   filter: string;
@@ -29,13 +29,20 @@ export function NonFollowersProvider({ children }: { children: React.ReactNode }
   const { data, isError, error, isFetching, isFetched, refetch } = useNonFollowers(username)
   const { paginatedData, numberPages, currentPage, previous, next, page } = usePagination(data!)
 
+  useEffect(() => {
+    // We wait for the setUsername to be complete to call the refetch method
+    async function callRefetch() { 
+      await refetch() 
+    }
+
+    if (username !== undefined && username !== '') { 
+      callRefetch() 
+    }
+  }, [username])
+
   const fetchUser = async (u: string) => {
     if (u !== undefined && u.trim() !== '') { 
       setUsername(u) 
-      await new Promise(resolve => setTimeout(resolve, 1))
-      //alert(u)
-      //alert(username)
-      await refetch()
     }
   }
 
