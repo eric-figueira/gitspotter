@@ -8,12 +8,8 @@ const axiosConfiguration = {
   }
 }
 
-export default function useNonFollowers(
-  //ref: React.RefObject<HTMLInputElement>,
-  u: string
-  ) {
-  //const inputReference: React.RefObject<HTMLInputElement> = ref
-
+export default function useNonFollowers(u: string) {
+  
   const { data, isError, error, isFetching, isFetched, refetch } = useQuery<GithubUser[]>({ 
     queryKey: ['user-non-followers'],
     queryFn: fetchNonFollowers,
@@ -63,11 +59,7 @@ export default function useNonFollowers(
 
     } while (continues && page < 5)
 
-    console.log(continues)
-    console.log(page)
-    console.log(results)
-
-    //console.clear()
+    console.clear()
     const nonFollowers = results.filter((user: GithubUser) => !user.followsBack)
     
     return nonFollowers

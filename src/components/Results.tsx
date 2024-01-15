@@ -60,7 +60,7 @@ export default function Results() {
                       <GithubUserCard key={user.login} data={user} />
                     ))}
                   </div>
-                  {paginatedData !== undefined && (
+                  {isFetched && paginatedData !== undefined && (
                     <div>
                       <Pagination className='text-neutral-200 select-none flex flex-wrap'>
                         <PaginationContent className='flex flex-wrap'>

@@ -53,9 +53,7 @@ export default function UsernamesInputs() {
               className='bg-neutral-200 border-neutral-400 text-neutral-800 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 text-md'
               placeholder='Check if someone does not follow you back...'
               value={filter}
-              //onChange={(e) => setFilter(e.target.value)}
               onChange={(e) => updateFilter(e.target.value)}
-              //disabled={data === undefined || data?.length === 0 || isFetching}
               disabled={paginatedData === undefined || paginatedData?.length === 0 || isFetching}
             />
           </div>
