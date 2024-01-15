@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/og-index-page-image.png',
-        width: 1900,
-        height: 1000,
-      }
+        width: 1200,
+        height: 630,
+      },
     ],
   },
   title: {
