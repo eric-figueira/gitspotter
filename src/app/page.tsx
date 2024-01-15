@@ -1,4 +1,5 @@
-import HomeComponent from '@/components/pages/HomeComponent'
+import Results from '@/components/Results'
+import UsernamesInputs from '@/components/UsernamesInputs'
 import NonFollowersProvider from '@/providers/NonFollowersProvider'
 
 export default function Home() {
@@ -10,7 +11,10 @@ export default function Home() {
         </div>
         <div>
           <NonFollowersProvider>
-            <HomeComponent />
+            <div className='flex flex-col gap-5'>
+              <UsernamesInputs />
+              <Results />
+            </div>
           </NonFollowersProvider>
         </div>
       </div>
